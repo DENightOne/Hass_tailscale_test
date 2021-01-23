@@ -4,6 +4,8 @@ FROM homeassistant/${BUILD_ARCH}-base:latest
 ARG BUILD_ARCH
 ARG TAILSCALE_VERSION="1.2.10"
 
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
 ENV LANG C.UTF-8
 
 # Download and install tailscale to /bin from https://pkgs.tailscale.com/stable/#static
