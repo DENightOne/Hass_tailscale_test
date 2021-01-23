@@ -24,6 +24,6 @@ case "$BUILD_ARCH" in
     ;;
 esac
 
-wget "https://pkgs.tailscale.com/stable/tailscale_1.2.10_amd64.tgz" -O - | tar xzf -
-mv "tailscale_1.2.10_amd64"/tailscale* /bin
-rm -rf "tailscale_1.2.10_amd64"
+wget https://pkgs.tailscale.com/stable/tailscale_1.2.10_amd64.tgz -O - | tar xzf -
+mv tailscale_1.2.10_amd64/tailscale* /bin
+rm -rf tailscale_1.2.10_amd64
