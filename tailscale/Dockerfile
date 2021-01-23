@@ -14,6 +14,7 @@ RUN chmod a+x /install2.sh
 RUN /install2.sh $BUILD_ARCH $TAILSCALE_VERSION
 
 # Install iptables dependency
+RUN apk update
 RUN apk add -U iptables
 
 COPY run.sh /
