@@ -7,9 +7,9 @@ ARG TAILSCALE_VERSION="1.2.10"
 ENV LANG C.UTF-8
 
 # Download and install tailscale to /bin from https://pkgs.tailscale.com/stable/#static
-COPY install.sh /
-RUN chmod a+x /install.sh
-RUN /install.sh $BUILD_ARCH $TAILSCALE_VERSION
+COPY install2.sh /
+RUN chmod a+x /install2.sh
+RUN /install2.sh $BUILD_ARCH $TAILSCALE_VERSION
 
 # Install iptables dependency
 RUN apk add -U iptables
