@@ -2,6 +2,7 @@ ARG BUILD_FROM=ghcr.io/hassio-addons/base/amd64:9.0.1
 # hadolint ignore=DL3006
 FROM ${BUILD_FROM}
 
+ARG BUILD_ARCH
 ARG TAILSCALE_VERSION="1.2.10"
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
