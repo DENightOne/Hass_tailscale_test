@@ -1,5 +1,5 @@
 {
-  "name": "Test Add-ons",
-  "url": "https://github.com/DENightOne/Hass_tailscale_test.git",
-  "maintainer": "@tsujamin"
+  "name": "moritzgloeckl's Add-ons",
+  "url": "https://github.com/moritzgloeckl/addon-tailscale",
+  "maintainer": "@moritzgloeckl"
 }

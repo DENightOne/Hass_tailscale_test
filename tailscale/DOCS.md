@@ -1,86 +1,114 @@
-# Home Assistant Add-on: Tailscale
+# Home Assistant Community Add-on: Tailscale
+
+Tailscale is a zero config VPN, which installs on any device in minutes on
+any device, including your Home Assistant instance.
+
+Create a secure network between your servers, computers, and cloud instances.
+Even when separated by firewalls or subnets, Tailscale just works. Tailscale
+manages firewall rules for you, and works from anywhere you are.
+
+## Prerequisites
+
+In order to use this add-on, you'll need a Tailscale account.
+
+It is free to use for personal & hobby projects, up to 20 clients/devices on a
+single user account. Sign up using your Google, Microsoft or GitHub account at
+the following URL:
+
+<https://login.tailscale.com/start>
+
+You can also create an account during the add-on installation processes,
+however, it is nice to know where you need to go later on.
 
 ## Installation
 
-Follow these steps to get the add-on installed on your system:
-
-1. Navigate in your Home Assistant frontend to **Supervisor** -> **Add-on Store**.
-2. Click the "dot dot dot" icon in the top right corner, followed by the **Repositories** button.
-3. Enter `https://github.com/tsujamin/hass-addons.git` as the new repository and click Add.
-4. Click the "dot dot dot" icon in the top right corner again, and click the **Reload** button
-5. Wait for the page to finish reloading, find the "Tailscale" add-on and click it. 
-6. Click on the "INSTALL" button.
-
-## How to use
-
-In order to use this add-on, you will need to have an account with Tailscale. 
-
-A free tier account can be created at their website: <https://login.tailscale.com/start>
-
-One you have an account registered, follow the following steps to start using the add-on:
-
-1. Log into the Tailscale admin portal (<https://login.tailscale.com/admin/authkeys>) and navigate to the **Keys** section.
-2. You will need to generate an **Authentication Key** that the add-on will use to join your system to your Tailscale account. It is recommended that you generate a **One-off key** (see `auth_key` below for more details).
-3. Navigate in your Home Assistant frontend to **Supervisor** -> **Dashboard** and click on the **Tailscale** addon.
-4. From the **Tailscale** page in your Home Assistant addons, navigate to **Configuration** and add the following line before saving (substituting `tskey-aaaaaaa...` for the key generated in step 2).
-
-    ```yaml
-    auth_key: tskey-aaaaaaaaaaaaaaaaaaaaaaaa
-    # optionally, set a custom hostname for the addon to register to Tailscale with
-    # hostname: myassistant
-    ```
-5. Navigate back the the **Info** tab and click **Start** to start using the add-on.
-
-## Known issues ##
-
-**I'm getting "PONG timeout" errors in the add-on log when trying to connect to my Home Assistant system**
-It appears that enabling "static port mapping" for outbound NAT on your firewall, along with UPNP/NAT-PMP may alleviate this issue. 
+1. Search for the "Tailscale" add-on in the Supervisor add-on store and
+   install it.
+1. Start the "Tailscale" add-on.
+1. Check the logs of the "Tailscale" add-on to see if everything went well.
+1. Open the Web UI of the "Tailscale" add-on to complete authentication and
+   couple your Home Assistant instance with your Tailscale account.
+1. Done!
 
 ## Configuration
 
-Example add-on configuration:
+This add-on has no additional configuration options for the add-on itself.
 
-```yaml
-auth_key: tskey-00f9f577b6352d587e673e563 
-hostname: homeassistant
-force_reauth: false
-```
+However, when logging in to Tailscale, you can configure your Tailscale
+network right from their interface.
 
-### Option: `auth_key` (required)
+<https://login.tailscale.com/>
 
-The `auth_key` is used by the add-on to connect your system to your Tailscale account and is a **Mandatory** option.
+The add-on exposes "Exit Node" capabilities that you can enable from your
+Tailscale account. Additionally, if the Supervisor managed your network (
+which is the default), the add-on will also advertise routes to your
+subnet to Tailscale.
 
-The value of this option is generated in the Tailscale Admin console under the **Keys** section: <https://login.tailscale.com/admin/authkeys>
+## Changelog & Releases
 
-There are two types of keys that can be generated:
+This repository keeps a change log using [GitHub's releases][releases]
+functionality.
 
-* **One-off Key**: this key is valid to join one machine, and cannot be reused. This is the **Recommended** key to use when configuring this Add-on. 
-* **Reusable Key**: this key can be used an unlimited number of times to connect an unlimited number of systems to your Tailscale account, and must be explicitly revoked in order to prevent its use. It is **strongly discouraged** you use this key when configuring the add-on, as compromise of the key could result in unauthorised devices being added you your Tailscale account.
+Releases are based on [Semantic Versioning][semver], and use the format
+of `MAJOR.MINOR.PATCH`. In a nutshell, the version will be incremented
+based on the following:
 
-If for some reason you must re-authenticate the add-on to your Tailscale account, and you have used a **One-off Key** as recommended, you will need to generate a new key and update `auth_key` when enabling the `force_reauth` option (see below). 
-
-### Option: `hostname` (optional)
-
-This option determins the name of your system as it will appear in Tailscale (for instance: to other clients).
-
-This value defaults to `homeassistant`.
-
-### Option: `force_reauth` (optional)
-
-Setting this option to `true` will cause Tailscale to try and reauthenticate to the service when the container is started.
-
-This should only be enabled if for some reason the add-on can no longer communicate with Tailscale. You will likely need to generate a new **One-off key** and update the `auth_key` option.
-
-Once authentication to Tailscale's servers has been restored, you **must** set `force_reauth` to `false` again to prevent reauthentication occuring every time the add-on is started or restarted
-
-This value defaults to `false`.
-
-### Option: `port` (optional)
-
-This option (if set) determins the UDP port that `tailscaled` listens on. 
-
-It shouldn't be neccesary to set this value as a random port is chosen at startup and UPNP/NAT-PMP should ensure it is appropriately accessible.
+- `MAJOR`: Incompatible or major changes.
+- `MINOR`: Backwards-compatible new features and enhancements.
+- `PATCH`: Backwards-compatible bugfixes and package updates.
 
 ## Support
 
-Got questions? Open an issue at <https://github.com/tsujamin/hass-addons/issues>
+Got questions?
+
+You have several options to get them answered:
+
+- The [Home Assistant Community Add-ons Discord chat server][discord] for add-on
+  support and feature requests.
+- The [Home Assistant Discord chat server][discord-ha] for general Home
+  Assistant discussions and questions.
+- The Home Assistant [Community Forum][forum].
+- Join the [Reddit subreddit][reddit] in [/r/homeassistant][reddit]
+
+You could also [open an issue here][issue] GitHub.
+
+## Authors & contributors
+
+The original setup of this repository is by [Franck Nijhof][frenck].
+
+For a full list of all authors and contributors,
+check [the contributor's page][contributors].
+
+## License
+
+MIT License
+
+Copyright (c) 2021 Franck Nijhof
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+[contributors]: https://github.com/hassio-addons/addon-tailscale/graphs/contributors
+[discord-ha]: https://discord.gg/c5DvZ4e
+[discord]: https://discord.me/hassioaddons
+[forum]: https://community.home-assistant.io/?u=frenck
+[frenck]: https://github.com/frenck
+[issue]: https://github.com/hassio-addons/addon-tailscale/issues
+[reddit]: https://reddit.com/r/homeassistant
+[releases]: https://github.com/hassio-addons/addon-tailscale/releases
+[semver]: http://semver.org/spec/v2.0.0.htm
